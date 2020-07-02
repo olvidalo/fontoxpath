@@ -6,6 +6,8 @@ import isSubtypeOf from './expressions/dataTypes/isSubtypeOf';
 import MapValue from './expressions/dataTypes/MapValue';
 import Value from './expressions/dataTypes/Value';
 import ExecutionParameters from './expressions/ExecutionParameters';
+import sequenceFactory from './expressions/dataTypes/sequenceFactory';
+import createDoublyIterableSequence from './expressions/util/createDoublyIterableSequence';
 
 export function transformMapToObject(
 	map: MapValue,
@@ -26,10 +28,24 @@ export function transformMapToObject(
 						.value()
 						.switchCases({
 							default: (seq) => seq,
-							multiple: () => {
-								throw new Error(
-									'Serialization error: The value of an entry in a map is expected to be a singleton sequence.'
-								);
+							multiple: (seq) => {
+								return sequenceFactory.create({
+									next: IterationHint => {
+										const values = seq.tryGetAllValues()
+										if (!values.ready) {
+											return notReady(values.promise)
+										}
+
+										const array = new ArrayValue(
+											values.value.map((item) =>
+												createDoublyIterableSequence(
+													sequenceFactory.singleton(item)
+												)
+											)
+										)
+										return ready(array)
+									}
+								})
 							},
 						})
 						.tryGetFirst();
