@@ -174,6 +174,19 @@ export function adaptJavaScriptValueToArrayOfXPathValues(
 	const type = parts[1] as ValueType;
 	const multiplicity = parts[2];
 
+	if (Array.isArray(value)) {
+		const sequence = sequenceFactory.create(
+			value.map((arrayItem) => {
+				if (arrayItem === undefined) {
+					return null;
+				}
+				const adaptedValue = adaptItemToXPathValue(arrayItem, domFacade);
+				return adaptedValue;
+			})
+		)
+		return sequence
+	}
+
 	switch (multiplicity) {
 		case '?': {
 			const converted = adaptJavaScriptValueToXPath(type, value, domFacade);

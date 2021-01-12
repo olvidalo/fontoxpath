@@ -198,7 +198,7 @@ class DomFacade {
 	}
 
 	public getNextSiblingPointer(
-		pointer: ChildNodePointer,
+		pointer: ChildNodePointer | AttributeNodePointer,
 		bucket: string | null = null
 	): ChildNodePointer {
 		const node = pointer.node;
