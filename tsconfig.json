@@ -1,7 +1,7 @@
 {
 	"compilerOptions": {
-    "typeRoots": ["./node_modules"],
 		"outDir": "./built",
+    "skipLibCheck": true,
 		"baseUrl": ".",
 		"lib": ["es6", "es2017", "esnext.asynciterable"],
 		"target": "es2017",

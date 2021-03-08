@@ -1,7 +1,11 @@
 {
 	"$schema": "https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json",
 	"compiler": {
-		"tsconfigFilePath": "./tsconfig.json"
+    "overrideTsconfig": {
+      "$schema": "http://json.schemastore.org/tsconfig",
+      "extends": "./tsconfig.json",
+      "typeRoots": ["./node_modules"]
+    }
 	},
 	"apiReport": {
 		"enabled": false

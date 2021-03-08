@@ -55,6 +55,7 @@ function outputDeclarations() {
 		module: 'commonjs',
 		declaration: true,
 		emitDeclarationOnly: true,
+    showVerboseMessages: true
 	};
 
 	const host = ts.createCompilerHost(options);
