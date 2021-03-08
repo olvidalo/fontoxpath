@@ -1,5 +1,6 @@
 {
 	"compilerOptions": {
+    "skipLibCheck": true,
 		"outDir": "./built",
 		"baseUrl": ".",
 		"lib": ["es6", "es2017", "esnext.asynciterable"],
